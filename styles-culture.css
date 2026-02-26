@@ -1,0 +1,22 @@
+.styles {
+  background-color: #D9B88A; /* Warm earth tone */
+  color: #5B3A2C; /* Dark brown for text */
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  border: 2px solid #A0522D; /* Brown border */
+}
+
+.pattern {
+  background-image: url('path/to/african-pattern.png'); /* Replace with actual pattern image */
+  background-size: cover;
+  padding: 30px;
+}
+
+@media (max-width: 768px) {
+  .styles {
+    padding: 10px;
+  }
+  .pattern {
+    padding: 20px;
+  }
+}

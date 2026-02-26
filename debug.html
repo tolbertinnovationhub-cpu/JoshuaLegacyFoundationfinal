@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu Debug Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; }
+        
+        .navbar {
+            background-color: #2c5f7f;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .logo h1 { color: white; }
+        
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            gap: 6px;
+            z-index: 1001;
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+            width: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(10px, -10px);
+        }
+        
+        .nav-links {
+            display: flex !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100vw;
+            flex-direction: column;
+            gap: 0;
+            margin: 0;
+            padding-top: 70px;
+            background-color: #2c5f7f;
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            z-index: 1001;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-links.active {
+            max-height: 600px;
+            padding-top: 70px;
+            overflow-y: auto;
+        }
+        
+        .nav-links li {
+            display: list-item;
+            margin: 0;
+            padding: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            width: 100%;
+        }
+        
+        .nav-links a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ff6b35;
+        }
+        
+        .content {
+            padding: 2rem;
+            background: white;
+        }
+        
+        .debug {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            max-width: 250px;
+            font-family: monospace;
+            border: 2px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>Test Menu</h1>
+            </div>
+            <button class="menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#challenge">Challenge</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#impact">Impact</a></li>
+                <li><a href="#stories">Stories</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="content">
+        <h2>Mobile Menu Debug Test</h2>
+        <p>Click the hamburger menu button to test the mobile navigation menu.</p>
+        <p>The menu should show all 7 items when clicked.</p>
+    </div>
+    
+    <div class="debug" id="debug">
+        <strong>Debug Info:</strong><br>
+        Menu Active: <span id="activeStatus">false</span><br>
+        Max-Height: <span id="maxHeight">0px</span><br>
+        Window Width: <span id="windowWidth">-</span>
+    </div>
+    
+    <script>
+        const menuToggle = document.getElementById('mobileMenuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        console.log('Menu Toggle:', menuToggle);
+        console.log('Nav Menu:', navMenu);
+        console.log('Window Width:', window.innerWidth);
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                console.log('Button clicked!');
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                
+                const isActive = navMenu.classList.contains('active');
+                const maxHeight = window.getComputedStyle(navMenu).maxHeight;
+                
+                console.log('Menu active:', isActive);
+                console.log('Max height:', maxHeight);
+                
+                document.getElementById('activeStatus').textContent = isActive;
+                document.getElementById('maxHeight').textContent = maxHeight;
+            });
+        }
+        
+        document.getElementById('windowWidth').textContent = window.innerWidth + 'px';
+        
+        // Close on link click
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
